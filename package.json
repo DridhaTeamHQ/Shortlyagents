@@ -1,0 +1,16 @@
+{
+  "name": "ecommerce-redirect-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shortly agents launcher with MongoDB-backed admin and agent logins.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mongodb": "^6.8.0"
+  }
+}
