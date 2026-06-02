@@ -66,6 +66,11 @@ const starterLogins = [
   }
 ];
 
+const starterAdmin = {
+  username: adminUsername,
+  password: adminPassword
+};
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(baseDir));
@@ -175,24 +180,43 @@ async function seedLoginsIfNeeded(collection) {
   await collection.insertMany(seedDocuments);
 }
 
+async function seedAdminIfNeeded(collection) {
+  const existingAdmin = await collection.findOne({ username: starterAdmin.username });
+  if (existingAdmin) {
+    return;
+  }
+
+  await collection.insertOne({
+    username: starterAdmin.username,
+    passwordHash: createPasswordHash(starterAdmin.password),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  });
+}
+
 async function start() {
   const client = new MongoClient(mongoUri);
   await client.connect();
 
   const db = client.db(mongoDbName);
   const loginsCollection = db.collection("agent_logins");
+  const adminsCollection = db.collection("admin_users");
   await loginsCollection.createIndex({ agentId: 1, username: 1 }, { unique: true });
+  await adminsCollection.createIndex({ username: 1 }, { unique: true });
   await seedLoginsIfNeeded(loginsCollection);
+  await seedAdminIfNeeded(adminsCollection);
 
   app.get("/api/session", (req, res) => {
     res.json({ adminAuthenticated: isAdminAuthenticated(req) });
   });
 
-  app.post("/api/admin/login", (req, res) => {
+  app.post("/api/admin/login", async (req, res) => {
     const username = String(req.body?.username || "").trim();
     const password = String(req.body?.password || "");
 
-    if (username !== adminUsername || password !== adminPassword) {
+    const adminUser = await adminsCollection.findOne({ username });
+
+    if (!adminUser || !verifyPassword(password, adminUser.passwordHash)) {
       res.status(401).json({ error: "Invalid admin username or password." });
       return;
     }
