@@ -543,7 +543,6 @@
 
     .admin-login-panel {
       width: min(560px, calc(100% - 32px));
-      margin: 28px auto 0;
       border: 1px solid rgba(107, 70, 232, 0.14);
       border-radius: 28px;
       background:
@@ -576,7 +575,6 @@
 
     .agent-login-panel {
       width: min(560px, calc(100% - 32px));
-      margin: 28px auto 0;
       border: 1px solid rgba(107, 70, 232, 0.14);
       border-radius: 28px;
       background:
@@ -605,6 +603,48 @@
       color: #5c38c6;
       font-size: 0.92rem;
       font-weight: 700;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      background: rgba(24, 15, 52, 0.28);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-shell {
+      position: relative;
+      width: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(107, 70, 232, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #4b347f;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(31, 18, 72, 0.08);
+    }
+
+    .modal-close:hover,
+    .modal-close:focus-visible {
+      outline: none;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(31, 18, 72, 0.12);
     }
 
     .admin-header {
@@ -999,6 +1039,15 @@
 
       .footer {
         padding-bottom: 18px;
+      }
+
+      .modal-overlay {
+        padding: 16px 10px;
+      }
+
+      .modal-close {
+        top: 10px;
+        right: 10px;
       }
     }
 
@@ -1461,122 +1510,160 @@
       onCancel
     }) {
       return e(
-        "section",
-        { className: "agent-login-panel", id: "agent-login", "aria-label": agent.name + " login" },
-        e("h2", null, agent.name + " login"),
+        "div",
+        { className: "modal-overlay", role: "dialog", "aria-modal": "true", "aria-labelledby": "agent-login-title" },
         e(
-          "p",
-          null,
-          "Enter the login credentials created by the admin for this specific agent."
-        ),
-        e(
-          "form",
-          {
-            className: "admin-form",
-            onSubmit: onSubmit
-          },
+          "div",
+          { className: "modal-shell" },
           e(
-            "div",
-            { className: "admin-field" },
-            e("label", { htmlFor: "agent-login-username" }, "Username"),
-            e("input", {
-              id: "agent-login-username",
-              value: username,
-              onChange: (event) => setUsername(event.target.value),
-              placeholder: "Enter agent username",
-              disabled: busy
-            })
-          ),
+            "button",
+            {
+              className: "modal-close",
+              type: "button",
+              onClick: onCancel,
+              "aria-label": "Close login"
+            },
+            "×"
+          )
+          ,
           e(
-            "div",
-            { className: "admin-field" },
-            e("label", { htmlFor: "agent-login-password" }, "Password"),
-            e("input", {
-              id: "agent-login-password",
-              type: "password",
-              value: password,
-              onChange: (event) => setPassword(event.target.value),
-              placeholder: "Enter agent password",
-              disabled: busy
-            })
-          ),
-          errorMessage
-            ? e("div", { className: "admin-login-error", role: "alert" }, errorMessage)
-            : null,
-          noteMessage
-            ? e("div", { className: "agent-login-note" }, noteMessage)
-            : null,
-          e(
-            "div",
-            { className: "agent-login-actions" },
+            "section",
+            { className: "agent-login-panel", id: "agent-login", "aria-label": agent.name + " login" },
+            e("h2", { id: "agent-login-title" }, agent.name + " login"),
             e(
-              "button",
-              { className: "admin-button", type: "submit", disabled: busy },
-              busy ? "Checking..." : "Continue"
+              "p",
+              null,
+              "Enter the login credentials created by the admin for this specific agent."
             ),
             e(
-              "button",
+              "form",
               {
-                className: "user-action secondary",
-                type: "button",
-                onClick: onCancel,
-                disabled: busy
+                className: "admin-form",
+                onSubmit: onSubmit
               },
-              "Cancel"
+              e(
+                "div",
+                { className: "admin-field" },
+                e("label", { htmlFor: "agent-login-username" }, "Username"),
+                e("input", {
+                  id: "agent-login-username",
+                  value: username,
+                  onChange: (event) => setUsername(event.target.value),
+                  placeholder: "Enter agent username",
+                  disabled: busy
+                })
+              ),
+              e(
+                "div",
+                { className: "admin-field" },
+                e("label", { htmlFor: "agent-login-password" }, "Password"),
+                e("input", {
+                  id: "agent-login-password",
+                  type: "password",
+                  value: password,
+                  onChange: (event) => setPassword(event.target.value),
+                  placeholder: "Enter agent password",
+                  disabled: busy
+                })
+              ),
+              errorMessage
+                ? e("div", { className: "admin-login-error", role: "alert" }, errorMessage)
+                : null,
+              noteMessage
+                ? e("div", { className: "agent-login-note" }, noteMessage)
+                : null,
+              e(
+                "div",
+                { className: "agent-login-actions" },
+                e(
+                  "button",
+                  { className: "admin-button", type: "submit", disabled: busy },
+                  busy ? "Checking..." : "Continue"
+                ),
+                e(
+                  "button",
+                  {
+                    className: "user-action secondary",
+                    type: "button",
+                    onClick: onCancel,
+                    disabled: busy
+                  },
+                  "Cancel"
+                )
+              )
             )
           )
         )
       );
     }
 
-    function AdminLoginPanel({ onLogin, errorMessage, username, password, setUsername, setPassword, busy }) {
+    function AdminLoginPanel({ onLogin, errorMessage, username, password, setUsername, setPassword, busy, onClose }) {
       return e(
-        "section",
-        { className: "admin-login-panel", id: "admin", "aria-label": "Admin login" },
-        e("h2", null, "Admin login"),
+        "div",
+        { className: "modal-overlay", role: "dialog", "aria-modal": "true", "aria-labelledby": "admin-login-title" },
         e(
-          "p",
-          null,
-          "Sign in to manage agent-specific logins stored in MongoDB."
-        ),
-        e(
-          "form",
-          {
-            className: "admin-form",
-            onSubmit: onLogin
-          },
-          e(
-            "div",
-            { className: "admin-field" },
-            e("label", { htmlFor: "admin-username" }, "Username"),
-            e("input", {
-              id: "admin-username",
-              value: username,
-              onChange: (event) => setUsername(event.target.value),
-              placeholder: "Shortly",
-              disabled: busy
-            })
-          ),
-          e(
-            "div",
-            { className: "admin-field" },
-            e("label", { htmlFor: "admin-password" }, "Password"),
-            e("input", {
-              id: "admin-password",
-              type: "password",
-              value: password,
-              onChange: (event) => setPassword(event.target.value),
-              placeholder: "Enter admin password",
-              disabled: busy
-            })
-          ),
-          errorMessage
-            ? e("div", { className: "admin-login-error", role: "alert" }, errorMessage)
-            : null,
+          "div",
+          { className: "modal-shell" },
           e(
             "button",
-            { className: "admin-button", type: "submit", disabled: busy },
-            busy ? "Signing in..." : "Sign in"
+            {
+              className: "modal-close",
+              type: "button",
+              onClick: onClose,
+              "aria-label": "Close admin login"
+            },
+            "×"
+          )
+          ,
+          e(
+            "section",
+            { className: "admin-login-panel", id: "admin", "aria-label": "Admin login" },
+            e("h2", { id: "admin-login-title" }, "Admin login"),
+            e(
+              "p",
+              null,
+              "Sign in to manage agent-specific logins stored in MongoDB."
+            ),
+            e(
+              "form",
+              {
+                className: "admin-form",
+                onSubmit: onLogin
+              },
+              e(
+                "div",
+                { className: "admin-field" },
+                e("label", { htmlFor: "admin-username" }, "Username"),
+                e("input", {
+                  id: "admin-username",
+                  value: username,
+                  onChange: (event) => setUsername(event.target.value),
+                  placeholder: "Shortly",
+                  disabled: busy
+                })
+              ),
+              e(
+                "div",
+                { className: "admin-field" },
+                e("label", { htmlFor: "admin-password" }, "Password"),
+                e("input", {
+                  id: "admin-password",
+                  type: "password",
+                  value: password,
+                  onChange: (event) => setPassword(event.target.value),
+                  placeholder: "Enter admin password",
+                  disabled: busy
+                })
+              ),
+              errorMessage
+                ? e("div", { className: "admin-login-error", role: "alert" }, errorMessage)
+                : null,
+              e(
+                "button",
+                { className: "admin-button", type: "submit", disabled: busy },
+                busy ? "Signing in..." : "Sign in"
+              )
+            )
           )
         )
       );
@@ -1893,7 +1980,8 @@
                 password: adminPassword,
                 setUsername: setAdminUsername,
                 setPassword: setAdminPassword,
-                busy: adminBusy
+                busy: adminBusy,
+                onClose: () => setAdminOpen(false)
               })
           : null,
         e(
