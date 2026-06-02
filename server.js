@@ -181,17 +181,19 @@ async function seedLoginsIfNeeded(collection) {
 }
 
 async function seedAdminIfNeeded(collection) {
-  const existingAdmin = await collection.findOne({ username: starterAdmin.username });
-  if (existingAdmin) {
-    return;
-  }
-
-  await collection.insertOne({
-    username: starterAdmin.username,
-    passwordHash: createPasswordHash(starterAdmin.password),
-    createdAt: new Date(),
-    updatedAt: new Date()
-  });
+  await collection.updateOne(
+    { username: starterAdmin.username },
+    {
+      $set: {
+        passwordHash: createPasswordHash(starterAdmin.password),
+        updatedAt: new Date()
+      },
+      $setOnInsert: {
+        createdAt: new Date()
+      }
+    },
+    { upsert: true }
+  );
 }
 
 async function start() {

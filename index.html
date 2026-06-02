@@ -73,13 +73,18 @@
 
     .pattern-bg .press {
       position: absolute;
-      inset: 0;
+      left: 50%;
+      top: 56%;
+      width: min(72vw, 920px);
+      height: min(72vw, 920px);
       overflow: hidden;
       font-size: 16px;
       color: #6f42ff;
       opacity: 0.18;
-      transform: translate(10%, 16%) scale(0.7);
+      transform: translate(-50%, -50%) scale(0.72);
       transform-origin: center;
+      animation: backgroundDrift 18s ease-in-out infinite alternate;
+      mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.92) 0 44%, transparent 78%);
     }
 
     .pattern-bg .sheet {
@@ -877,6 +882,13 @@
     }
 
     @media (max-width: 980px) {
+      .pattern-bg .press {
+        top: 58%;
+        width: min(88vw, 760px);
+        height: min(88vw, 760px);
+        transform: translate(-50%, -50%) scale(0.68);
+      }
+
       .topbar,
       .hero,
       .details,
@@ -925,6 +937,14 @@
     }
 
     @media (max-width: 700px) {
+      .pattern-bg .press {
+        top: 62%;
+        width: min(112vw, 620px);
+        height: min(112vw, 620px);
+        transform: translate(-50%, -50%) scale(0.56);
+        opacity: 0.14;
+      }
+
       .topbar,
       .hero,
       .details,
@@ -1052,6 +1072,13 @@
     }
 
     @media (max-width: 420px) {
+      .pattern-bg .press {
+        top: 66%;
+        width: min(138vw, 540px);
+        height: min(138vw, 540px);
+        transform: translate(-50%, -50%) scale(0.48);
+      }
+
       .copy h1 {
         font-size: clamp(1.9rem, 11vw, 2.4rem);
       }
@@ -1080,6 +1107,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .pattern-bg .press,
       .launch-card,
       .detail,
       .pattern-bg .sheet:before {
@@ -1094,6 +1122,15 @@
       }
       to {
         transform: translateY(6em);
+      }
+    }
+
+    @keyframes backgroundDrift {
+      from {
+        transform: translate(-52%, -50%) scale(0.7);
+      }
+      to {
+        transform: translate(-48%, -53%) scale(0.74);
       }
     }
   </style>
