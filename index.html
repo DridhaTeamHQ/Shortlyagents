@@ -338,12 +338,10 @@
       gap: clamp(24px, 3vw, 40px);
       align-items: center;
       padding: clamp(26px, 3.2vw, 40px);
-      border: 1px solid rgba(123, 97, 204, 0.12);
+      border: 1px solid rgba(123, 97, 204, 0.08);
       border-radius: 34px;
-      background:
-        radial-gradient(circle at top right, rgba(132, 93, 255, 0.12), transparent 28%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 244, 255, 0.94));
-      box-shadow: 0 22px 52px rgba(27, 18, 56, 0.08);
+      background: transparent;
+      box-shadow: none;
     }
 
     .copy {
@@ -377,8 +375,7 @@
       min-width: 0;
       padding: 18px;
       border-radius: 28px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(244, 238, 255, 0.42));
+      background: transparent;
     }
 
     .card-stage::before {
@@ -387,11 +384,10 @@
       inset: 18px;
       border-radius: 26px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(107, 70, 232, 0.14), transparent 30%),
-        radial-gradient(circle at 75% 70%, rgba(107, 70, 232, 0.1), transparent 34%),
-        linear-gradient(180deg, rgba(237, 231, 255, 0.92), rgba(231, 223, 255, 0.72));
+        radial-gradient(circle at 30% 30%, rgba(107, 70, 232, 0.12), transparent 30%),
+        radial-gradient(circle at 75% 70%, rgba(107, 70, 232, 0.08), transparent 34%);
       z-index: -1;
-      filter: blur(1px);
+      filter: blur(10px);
     }
 
     .launch-grid {
