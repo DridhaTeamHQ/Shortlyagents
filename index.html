@@ -30,7 +30,9 @@
       min-height: 100vh;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background: #f6f3ff;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.92), transparent 30%),
+        linear-gradient(180deg, #f7f4ff 0%, #efe7ff 100%);
     }
 
     a {
@@ -75,7 +77,10 @@
       overflow: hidden;
       font-size: 16px;
       color: #6f42ff;
-      opacity: 0.52;
+      opacity: 0.12;
+      transform: translate(24%, 22%) scale(0.62);
+      transform-origin: center;
+      filter: blur(0.2px);
     }
 
     .pattern-bg .sheet {
@@ -248,17 +253,17 @@
 
     .topbar {
       width: min(1140px, calc(100% - 32px));
-      margin-top: 16px;
-      padding: 16px 22px;
+      margin-top: 20px;
+      padding: 18px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--panel);
-      box-shadow: 0 10px 28px rgba(27, 18, 56, 0.06);
-      backdrop-filter: blur(12px);
+      border: 1px solid rgba(120, 93, 208, 0.12);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 18px 36px rgba(36, 19, 88, 0.08);
+      backdrop-filter: blur(18px);
       position: sticky;
       top: 14px;
       z-index: 5;
@@ -274,12 +279,12 @@
     }
 
     .toggle-chip {
-      border: 1px solid rgba(107, 70, 232, 0.18);
+      border: 1px solid rgba(107, 70, 232, 0.14);
       border-radius: 999px;
-      padding: 10px 14px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 236, 255, 0.92));
-      color: #3c2a78;
-      font-size: 0.92rem;
+      padding: 11px 16px;
+      background: rgba(247, 243, 255, 0.96);
+      color: #49308f;
+      font-size: 0.88rem;
       font-weight: 800;
       cursor: pointer;
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
@@ -325,74 +330,146 @@
     }
 
     .hero {
-      margin-top: 18px;
+      margin-top: 24px;
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
       gap: clamp(20px, 3vw, 34px);
-      align-items: start;
+      align-items: stretch;
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid rgba(120, 93, 208, 0.12);
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at top right, rgba(121, 89, 255, 0.16), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(250, 247, 255, 0.92));
+      box-shadow: 0 22px 50px rgba(35, 18, 84, 0.08);
     }
 
     .copy {
       min-width: 0;
-      padding: 2px 0;
+      padding: 6px 0;
+      display: grid;
+      align-content: start;
+      gap: 18px;
+    }
+
+    .copy-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(107, 70, 232, 0.08);
+      color: #5b39c6;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .copy-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #8b67ff 0%, #6b46e8 100%);
+      box-shadow: 0 0 0 4px rgba(107, 70, 232, 0.12);
     }
 
     .copy h1 {
-      margin: 16px 0 12px;
-      font-size: clamp(2.9rem, 5.2vw, 4.7rem);
-      line-height: 0.94;
+      margin: 0;
+      font-size: clamp(3.1rem, 5.4vw, 5.2rem);
+      line-height: 0.9;
       letter-spacing: -0.05em;
-      max-width: 9.5ch;
+      max-width: 8.8ch;
       text-wrap: balance;
+    }
+
+    .copy-body {
+      max-width: 54ch;
+      margin: 0;
+      color: #5f5676;
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 14px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(120, 93, 208, 0.12);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 1.4rem;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
     }
 
     .card-stage {
       position: relative;
-      min-height: 300px;
+      min-height: 100%;
       display: grid;
-      place-items: start center;
+      place-items: stretch;
       isolation: isolate;
       min-width: 0;
+      padding: 18px;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(72, 42, 161, 0.94), rgba(35, 21, 88, 0.92)),
+        radial-gradient(circle at top right, rgba(153, 127, 255, 0.4), transparent 38%);
+      box-shadow: 0 26px 46px rgba(29, 14, 76, 0.22);
     }
 
     .card-stage::before {
       content: "";
       position: absolute;
-      inset: 10px 20px 20px;
-      border-radius: 50%;
+      inset: 18px;
+      border-radius: 24px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(107, 70, 232, 0.14), transparent 34%),
-        radial-gradient(circle at 75% 70%, rgba(107, 70, 232, 0.09), transparent 38%),
-        rgba(107, 70, 232, 0.04);
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.16), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.08), transparent 40%);
       z-index: -1;
-      filter: blur(2px);
+      filter: blur(8px);
     }
 
     .launch-grid {
-      width: min(100%, 520px);
+      width: 100%;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 14px;
-      transform: rotate(-2deg);
-      margin-top: -8px;
       min-width: 0;
     }
 
     .launch-card {
       width: 100%;
-      min-height: 124px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.75);
+      min-height: 148px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 238, 255, 0.92));
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 242, 255, 0.95));
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 18px 34px rgba(18, 14, 35, 0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+        0 20px 30px rgba(9, 4, 27, 0.16);
+      display: grid;
+      align-content: space-between;
+      justify-items: start;
+      text-align: left;
       position: relative;
       overflow: hidden;
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, filter 180ms ease;
@@ -420,7 +497,8 @@
 
     .launch-card:hover,
     .launch-card:focus-visible {
-      box-shadow: 0 24px 46px rgba(18, 14, 35, 0.16);
+      transform: translateY(-4px);
+      box-shadow: 0 26px 44px rgba(9, 4, 27, 0.22);
       border-color: rgba(107, 70, 232, 0.18);
       filter: saturate(1.08);
       outline: none;
@@ -431,84 +509,126 @@
     }
 
     .launch-card.slant-left {
-      transform: rotate(-3deg);
+      grid-column: span 3;
     }
 
     .launch-card.slant-right {
-      transform: rotate(3deg);
+      grid-column: span 3;
     }
 
-    .launch-card.slant-left:hover,
-    .launch-card.slant-left:focus-visible {
-      transform: rotate(-3deg) translateY(-6px);
-    }
-
-    .launch-card.slant-right:hover,
-    .launch-card.slant-right:focus-visible {
-      transform: rotate(3deg) translateY(-6px);
-    }
-
-    .launch-card.coming-soon {
-      transform: rotate(-2deg);
-      cursor: default;
-      opacity: 0.94;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 242, 255, 0.96)),
-        repeating-linear-gradient(
-          135deg,
-          rgba(107, 70, 232, 0.04) 0 10px,
-          rgba(107, 70, 232, 0.01) 10px 20px
-        );
-    }
-
-    .launch-card.coming-soon:hover,
-    .launch-card.coming-soon:focus-visible {
-      transform: rotate(-2deg);
-      box-shadow: 0 18px 34px rgba(18, 14, 35, 0.12);
-      border-color: rgba(255, 255, 255, 0.75);
+    .launch-card.coming-soon,
+    .digest-card {
+      grid-column: 2 / span 4;
     }
 
     .pix-card {
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(237, 229, 255, 0.96));
-      border-bottom: 5px solid #8e73f2;
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(234, 226, 255, 0.95));
     }
 
     .shortly-card {
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(233, 222, 255, 0.96));
-      border-bottom: 5px solid var(--accent);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(228, 219, 255, 0.96));
     }
 
     .digest-card {
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 240, 255, 0.96));
-      border-bottom: 5px solid #cdc4ec;
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 237, 255, 0.96));
     }
 
     .launch-card-name {
-      font-size: clamp(2rem, 3vw, 2.55rem);
-      line-height: 0.98;
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      line-height: 0.92;
       letter-spacing: -0.04em;
       font-weight: 900;
-      max-width: 8ch;
+      max-width: 6ch;
       text-wrap: balance;
       position: relative;
       z-index: 1;
       color: var(--accent);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+      text-shadow: none;
     }
 
     .launch-card-name .suffix {
       color: var(--ink);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+      text-shadow: none;
+    }
+
+    .launch-card::marker {
+      display: none;
+    }
+
+    .launch-card-label {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(107, 70, 232, 0.08);
+      color: #5b39c6;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .launch-card-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.8;
+    }
+
+    .launch-card-note {
+      position: relative;
+      z-index: 1;
+      color: #615783;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      max-width: 24ch;
     }
 
     .details {
-      margin-top: 8px;
+      margin-top: 26px;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      gap: 18px;
+    }
+
+    .details-intro {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+    }
+
+    .details-intro h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+    }
+
+    .details-intro p {
+      margin: 0;
+      max-width: 54ch;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .details-eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #5d3bc8;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .admin-shell {
@@ -774,27 +894,29 @@
     }
 
     .detail {
-      min-height: 124px;
-      padding: 18px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
+      min-height: 160px;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(120, 93, 208, 0.12);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 242, 255, 0.9));
-      box-shadow: 0 10px 24px rgba(27, 18, 56, 0.04);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 255, 0.92));
+      box-shadow: 0 16px 34px rgba(27, 18, 56, 0.06);
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+      display: grid;
+      gap: 16px;
     }
 
     .detail:hover {
-      transform: translateY(-2px);
+      transform: translateY(-4px);
       border-color: rgba(107, 70, 232, 0.14);
-      box-shadow: 0 16px 30px rgba(27, 18, 56, 0.07);
+      box-shadow: 0 22px 38px rgba(27, 18, 56, 0.08);
     }
 
     .detail-head {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 0;
       font-size: 1rem;
       font-weight: 800;
       color: #2a2140;
@@ -811,15 +933,15 @@
 
     .detail span {
       color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.95rem;
+      line-height: 1.65;
+      font-size: 0.96rem;
     }
 
     .footer {
-      margin-top: 20px;
+      margin-top: 30px;
       color: var(--muted);
       font-size: 0.86rem;
-      padding-bottom: 10px;
+      padding: 0 0 18px;
     }
 
     @media (max-width: 980px) {
@@ -839,6 +961,7 @@
       .hero {
         grid-template-columns: 1fr;
         gap: 18px;
+        padding: 22px;
       }
 
       .topbar {
@@ -856,16 +979,35 @@
 
       .card-stage {
         min-height: auto;
-        padding-bottom: 6px;
       }
 
       .admin-grid {
         grid-template-columns: 1fr;
       }
 
+      .details-intro {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
       .admin-header,
       .user-row {
         flex-direction: column;
+      }
+
+      .hero-metrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .launch-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .launch-card.slant-left,
+      .launch-card.slant-right,
+      .launch-card.coming-soon,
+      .digest-card {
+        grid-column: auto;
       }
     }
 
@@ -909,25 +1051,6 @@
         grid-template-columns: 1fr;
       }
 
-      .launch-grid {
-        transform: none;
-      }
-
-      .launch-card,
-      .launch-card.slant-left,
-      .launch-card.slant-right,
-      .launch-card.coming-soon,
-      .launch-card:hover,
-      .launch-card:focus-visible,
-      .launch-card.slant-left:hover,
-      .launch-card.slant-left:focus-visible,
-      .launch-card.slant-right:hover,
-      .launch-card.slant-right:focus-visible,
-      .launch-card.coming-soon:hover,
-      .launch-card.coming-soon:focus-visible {
-        transform: none;
-      }
-
       .copy h1 {
         max-width: none;
         margin-top: 8px;
@@ -935,9 +1058,17 @@
         line-height: 0.98;
       }
 
+      .copy-body {
+        font-size: 0.97rem;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+
       .launch-card {
-        min-height: 108px;
-        padding: 16px 14px;
+        min-height: 132px;
+        padding: 16px;
       }
 
       .launch-card-name {
@@ -947,6 +1078,10 @@
 
       .details {
         gap: 12px;
+      }
+
+      .details-intro h2 {
+        margin-bottom: 6px;
       }
 
       .detail,
@@ -993,6 +1128,10 @@
 
       .launch-card-name {
         font-size: 1.4rem;
+      }
+
+      .launch-card-note {
+        font-size: 0.86rem;
       }
 
       .detail-head {
@@ -1065,15 +1204,15 @@
     const details = [
       {
         title: "Pix Agent",
-        body: "A direct workspace for Pix-related tasks and focused execution when you want to jump straight into that flow."
+        body: "Jump into Pix work fast with a focused entry point for image tasks, production prompts, and quick execution."
       },
       {
         title: "Shortly AI Agent",
-        body: "The main Shortly workspace for your core agent experience, designed as the primary entry point in this hub."
+        body: "Use the core Shortly workspace for your main assistant flow, shared context, and primary day-to-day operations."
       },
       {
         title: "Daily Digest Agent",
-        body: "An upcoming agent reserved for future daily summaries, updates, and recurring digest-style workflows."
+        body: "Open the Daily Digest dashboard for recurring summaries, update workflows, and scheduled editorial review."
       }
     ];
 
@@ -1140,7 +1279,22 @@
           onClick: () => onOpenLogin(card.id),
           "aria-label": "Open " + card.name
         },
+        e(
+          "span",
+          { className: "launch-card-label" },
+          card.live ? "Secure access" : "Coming soon"
+        ),
         content
+        ,
+        e(
+          "span",
+          { className: "launch-card-note" },
+          card.id === "pix-agent"
+            ? "Creative workspace and fast visual execution."
+            : card.id === "shortly-ai-agent"
+              ? "Primary control center for the main Shortly flow."
+              : "Recurring summaries and email-oriented digest work."
+        )
       );
     }
 
@@ -1819,8 +1973,35 @@
           e(
             "div",
             { className: "copy" },
+            e("span", { className: "copy-kicker" }, "Agent access hub"),
             e("h1", null, "One simple place to open your agents."),
-            
+            e(
+              "p",
+              { className: "copy-body" },
+              "Keep Pix, Shortly AI, and Daily Digest behind a single polished front door with admin-managed access, MongoDB-backed logins, and cleaner handoff into each workflow."
+            ),
+            e(
+              "div",
+              { className: "hero-metrics", "aria-label": "Platform overview" },
+              e(
+                "div",
+                { className: "metric" },
+                e("strong", null, "3"),
+                e("span", null, "Agent destinations available from one launcher")
+              ),
+              e(
+                "div",
+                { className: "metric" },
+                e("strong", null, "1"),
+                e("span", null, "Admin surface to create and control access")
+              ),
+              e(
+                "div",
+                { className: "metric" },
+                e("strong", null, "Mongo"),
+                e("span", null, "Stored credentials and server-side validation")
+              )
+            )
           ),
           e(
             "section",
@@ -1837,6 +2018,21 @@
         e(
           "section",
           { className: "details", id: "details", "aria-label": "Agent hub details" },
+          e(
+            "div",
+            { className: "details-intro" },
+            e(
+              "div",
+              null,
+              e("span", { className: "details-eyebrow" }, "Workspace map"),
+              e("h2", null, "Each agent has a distinct job."),
+              e(
+                "p",
+                null,
+                "Use the launcher cards for fast entry, then rely on the summaries below to understand where each workspace fits in the broader Shortly setup."
+              )
+            )
+          ),
           details.map((item) => e(DetailCard, item))
         ),
         activeAgent
