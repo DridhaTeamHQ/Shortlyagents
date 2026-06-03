@@ -247,7 +247,6 @@
       transform: translate(-50%, -50%) rotateX(-45deg) rotateZ(-45deg)
         translate(-2em, 4.45em) skewX(-22.5deg);
     }
-    }
 
     .workspace {
       width: min(1240px, 100%);
@@ -1418,6 +1417,409 @@
         transform: translateY(0) scale(1);
       }
     }
+
+    /* Clean Shortly-style app shell */
+    :root {
+      --ink: #111015;
+      --muted: #696475;
+      --line: #e9e5f2;
+      --accent: #7857ff;
+      --accent-soft: #f1ecff;
+      --shadow: 0 22px 60px rgba(20, 17, 29, 0.08);
+    }
+
+    body {
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.96), transparent 30%),
+        linear-gradient(180deg, #fbfaff 0%, #f3efff 100%);
+    }
+
+    .app-shell {
+      padding: 28px 18px;
+    }
+
+    .workspace {
+      width: min(1160px, 100%);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .topbar {
+      min-height: 72px;
+      padding: 14px 16px 14px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(232, 227, 244, 0.95);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 44px rgba(25, 20, 38, 0.06);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand-text {
+      gap: 8px;
+      font-size: 1.85rem;
+      letter-spacing: 0;
+    }
+
+    .brand-text .shortly {
+      background: none;
+      color: var(--accent);
+    }
+
+    .brand-text .agents {
+      color: var(--ink);
+    }
+
+    .topbar-actions {
+      gap: 8px;
+    }
+
+    .toggle-chip,
+    .ghost-chip {
+      min-height: 42px;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      letter-spacing: 0;
+    }
+
+    .toggle-chip {
+      border-color: #15121b;
+      background: #15121b;
+      color: #ffffff;
+      box-shadow: none;
+    }
+
+    .ghost-chip {
+      border-color: var(--line);
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .copy,
+    .hero-stats,
+    .card-stage,
+    .detail {
+      border-radius: 18px;
+      border: 1px solid rgba(232, 227, 244, 0.95);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .copy {
+      padding: clamp(24px, 4vw, 46px);
+      min-height: 260px;
+      display: grid;
+      align-content: center;
+      gap: 16px;
+    }
+
+    .copy-label,
+    .hero-eyebrow {
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .copy h1 {
+      margin: 0;
+      max-width: 12ch;
+      color: var(--ink);
+      font-size: 4.8rem;
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .copy-lead {
+      margin: 0;
+      max-width: 52ch;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    .hero-stats {
+      width: min(280px, 30vw);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-stat {
+      min-height: 74px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fbfaff;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+
+    .hero-stat strong {
+      font-size: 1.25rem;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .hero-stat span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .card-stage {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .card-stage::before,
+    .launch-card::before,
+    .launch-card::after {
+      content: none;
+    }
+
+    .section-heading {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .section-heading span {
+      color: var(--ink);
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .launch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .launch-card {
+      min-height: 236px;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: none;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .launch-card:hover,
+    .launch-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: rgba(120, 87, 255, 0.35);
+      box-shadow: 0 18px 36px rgba(31, 24, 55, 0.08);
+      outline: none;
+    }
+
+    .launch-card-inner {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 14px;
+    }
+
+    .launch-card-kicker {
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+    }
+
+    .launch-card-name {
+      max-width: none;
+      color: var(--ink);
+      font-size: 2rem;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .launch-card-name .suffix {
+      color: var(--accent);
+    }
+
+    .launch-card-summary {
+      max-width: none;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .launch-card-cta {
+      min-height: 40px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #15121b;
+      color: #ffffff;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .detail {
+      min-height: 138px;
+      padding: 18px;
+      box-shadow: 0 14px 34px rgba(25, 20, 38, 0.05);
+    }
+
+    .detail:hover {
+      transform: translateY(-2px);
+      border-color: rgba(120, 87, 255, 0.25);
+      box-shadow: 0 18px 38px rgba(25, 20, 38, 0.07);
+    }
+
+    .detail-head {
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+
+    .detail-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(120, 87, 255, 0.1);
+    }
+
+    .detail-metric {
+      border-radius: 8px;
+      background: #f4f1ff;
+      color: var(--accent);
+    }
+
+    .footer,
+    .sidebar,
+    .topbar-note,
+    .sidebar-copy,
+    .sidebar-actions {
+      display: none;
+    }
+
+    .modal-overlay {
+      background: rgba(17, 16, 21, 0.2);
+      backdrop-filter: blur(18px);
+    }
+
+    .admin-login-panel,
+    .agent-login-panel {
+      border-radius: 18px;
+      border: 1px solid rgba(232, 227, 244, 0.95);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 28px 90px rgba(20, 17, 29, 0.18);
+    }
+
+    .admin-field input,
+    .admin-field select {
+      border-radius: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .app-shell {
+        padding: 14px 10px 22px;
+      }
+
+      .topbar,
+      .copy,
+      .hero-stats,
+      .card-stage,
+      .detail {
+        border-radius: 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .launch-grid,
+      .details {
+        grid-template-columns: 1fr;
+      }
+
+      .copy {
+        min-height: 0;
+      }
+
+      .copy h1 {
+        font-size: 3.4rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar {
+        display: grid;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .toggle-chip,
+      .ghost-chip {
+        flex: 1 1 auto;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .copy h1 {
+        font-size: 2.55rem;
+      }
+
+      .launch-card-name {
+        font-size: 1.72rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2248,8 +2650,8 @@
           "div",
           { className: "workspace" },
           e(
-            "aside",
-            { className: "sidebar", "aria-label": "Workspace sidebar" },
+            "header",
+            { className: "topbar", "aria-label": "Main navigation" },
             e(
               "div",
               { className: "brand", "aria-label": "Shortly Agents brand" },
@@ -2262,28 +2664,17 @@
             ),
             e(
               "div",
-              { className: "sidebar-copy" },
-              e("span", { className: "sidebar-label" }, "launcher"),
-              e("h2", null, "Agent control"),
-              e(
-                "p",
-                null,
-                "Minimal access hub for Pix, Shortly AI, and Daily Wrap Email."
-              )
-            ),
-            e(
-              "div",
-              { className: "sidebar-actions" },
+              { className: "topbar-actions" },
               e(
                 "button",
                 {
-                  className: "toggle-chip sidebar-admin",
+                  className: "toggle-chip",
                   type: "button",
                   onClick: handleAdminToggle,
                   "aria-expanded": adminOpen,
                   "aria-controls": "admin"
                 },
-                adminOpen ? "Close admin" : "Open admin"
+                adminOpen ? "Close admin" : "Admin"
               ),
               adminAuthenticated
                 ? e(
@@ -2293,94 +2684,69 @@
                       type: "button",
                       onClick: handleAdminLogout
                     },
-                    adminBusy ? "Logging out..." : "Log out admin"
+                    adminBusy ? "Logging out..." : "Log out"
                   )
                 : null
             )
           ),
           e(
-            "div",
-            { className: "mainboard" },
+            "section",
+            { className: "hero" },
             e(
-              "header",
-              { className: "topbar", "aria-label": "Main navigation" },
+              "div",
+              { className: "copy" },
+              e("span", { className: "copy-label" }, "Shortly workspace"),
+              e("h1", null, "Agents for your team workflows."),
               e(
-                "div",
-                { className: "topbar-main" },
-                e("span", { className: "hero-eyebrow" }, "Shortly workspace"),
-                e("h1", null, "Open the right agent, fast.")
-              ),
-              e(
-                "div",
-                { className: "topbar-actions" },
-                e("span", { className: "topbar-note" }, "smooth access hub")
+                "p",
+                { className: "copy-lead" },
+                "Launch each agent with its own login. Clean, fast, and controlled by admin access."
               )
             ),
             e(
-              "section",
-              { className: "hero" },
+              "div",
+              { className: "hero-stats", "aria-label": "Workspace summary" },
               e(
                 "div",
-                { className: "copy" },
-                e("span", { className: "copy-label" }, "Smooth access"),
-                e(
-                  "p",
-                  { className: "copy-lead" },
-                  "Choose a workspace and continue through its dedicated login flow with a cleaner, softer software UI."
-                ),
-                e(
-                  "div",
-                  { className: "hero-stats" },
-                  e(
-                    "div",
-                    { className: "hero-stat" },
-                    e("strong", null, "3"),
-                    e("span", null, "Live agents")
-                  ),
-                  e(
-                    "div",
-                    { className: "hero-stat" },
-                    e("strong", null, "Role-based"),
-                    e("span", null, "Per-agent logins")
-                  ),
-                  e(
-                    "div",
-                    { className: "hero-stat" },
-                    e("strong", null, "MongoDB"),
-                    e("span", null, "Stored access")
-                  )
-                )
+                { className: "hero-stat" },
+                e("strong", null, "3"),
+                e("span", null, "Agents")
               ),
               e(
-                "section",
-                { className: "card-stage", id: "launch-cards", "aria-label": "Agent launch cards" },
-                e(
-                  "div",
-                  { className: "section-heading" },
-                  e("span", null, "Available workspaces"),
-                  e("p", null, "Minimal tiles, direct launch")
-                ),
-                e(
-                  "div",
-                  { className: "launch-grid" },
-                  launchCards.map((card) =>
-                    e(LaunchCard, { card, onOpenLogin: handleOpenAgentLogin, key: card.id })
-                  )
-                )
+                "div",
+                { className: "hero-stat" },
+                e("strong", null, "Admin"),
+                e("span", null, "Access")
+              ),
+              e(
+                "div",
+                { className: "hero-stat" },
+                e("strong", null, "Live"),
+                e("span", null, "Links")
               )
-            ),
-            e(
-              "section",
-              { className: "details", id: "details", "aria-label": "Agent hub details" },
-              details.map((item) => e(DetailCard, item))
-            ),
-            e(
-              "footer",
-              { className: "footer" },
-              adminAuthenticated || adminDataBusy
-                ? "Agent login records are served from MongoDB through the local API."
-                : "Agent destinations are controlled by their respective deployments."
             )
+          ),
+          e(
+            "section",
+            { className: "card-stage", id: "launch-cards", "aria-label": "Agent launch cards" },
+            e(
+              "div",
+              { className: "section-heading" },
+              e("span", null, "Workspaces"),
+              e("p", null, "Choose an agent")
+            ),
+            e(
+              "div",
+              { className: "launch-grid" },
+              launchCards.map((card) =>
+                e(LaunchCard, { card, onOpenLogin: handleOpenAgentLogin, key: card.id })
+              )
+            )
+          ),
+          e(
+            "section",
+            { className: "details", id: "details", "aria-label": "Agent hub details" },
+            details.map((item) => e(DetailCard, item))
           )
         ),
         activeAgent
