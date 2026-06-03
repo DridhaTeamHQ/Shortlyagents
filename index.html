@@ -1188,14 +1188,31 @@
     const API_HEADERS = { "Content-Type": "application/json" };
 
     async function apiRequest(url, options = {}) {
-      const response = await fetch(url, {
-        credentials: "same-origin",
-        ...options,
-        headers: {
-          ...(options.body ? API_HEADERS : {}),
-          ...(options.headers || {})
+      const controller = new AbortController();
+      const timeoutMs = options.timeoutMs || 15000;
+      const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
+
+      let response;
+
+      try {
+        response = await fetch(url, {
+          credentials: "same-origin",
+          ...options,
+          signal: controller.signal,
+          headers: {
+            ...(options.body ? API_HEADERS : {}),
+            ...(options.headers || {})
+          }
+        });
+      } catch (error) {
+        window.clearTimeout(timeoutId);
+        if (error.name === "AbortError") {
+          throw new Error("Request timed out. Please try again.");
         }
-      });
+        throw error;
+      }
+
+      window.clearTimeout(timeoutId);
 
       let payload = {};
 
@@ -1830,14 +1847,20 @@
           });
 
           setAdminAuthenticated(true);
+          setAdminError("");
           setAdminPassword("");
           setAdminDataBusy(true);
-          await refreshAdminLogins();
+          refreshAdminLogins()
+            .catch((error) => {
+              setAdminError(error.message);
+            })
+            .finally(() => {
+              setAdminDataBusy(false);
+            });
         } catch (error) {
           setAdminError(error.message);
         } finally {
           setAdminBusy(false);
-          setAdminDataBusy(false);
         }
       }
 
