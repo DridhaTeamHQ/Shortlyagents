@@ -279,6 +279,14 @@
       z-index: 5;
     }
 
+    .topbar-main {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
     .topbar-actions {
       display: flex;
       align-items: center;
@@ -314,7 +322,7 @@
       display: flex;
       align-items: center;
       min-width: 0;
-      flex: 1 1 auto;
+      flex: 0 0 auto;
     }
 
     .brand-text {
@@ -342,6 +350,29 @@
       color: var(--ink);
     }
 
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .topbar-link {
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: #7c7493;
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .topbar-link.active {
+      background: linear-gradient(180deg, rgba(112, 75, 237, 0.12), rgba(112, 75, 237, 0.06));
+      color: #5532c3;
+      box-shadow: inset 0 -2px 0 rgba(107, 70, 232, 0.34);
+    }
+
     .hero {
       margin-top: 24px;
       display: grid;
@@ -364,6 +395,21 @@
       padding: 10px 0;
     }
 
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(107, 70, 232, 0.08);
+      color: #5b39c5;
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
     .copy h1 {
       margin: 0 0 18px;
       font-size: clamp(3.35rem, 4.9vw, 5.25rem);
@@ -381,11 +427,40 @@
       line-height: 1.78;
     }
 
+    .hero-stats {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .hero-stat {
+      min-width: 150px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(228, 220, 246, 0.92);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      display: grid;
+      gap: 4px;
+    }
+
+    .hero-stat strong {
+      font-size: 1rem;
+      color: #251d37;
+    }
+
+    .hero-stat span {
+      color: #756d88;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
     .card-stage {
       position: relative;
       min-height: 388px;
       display: grid;
-      place-items: center;
+      align-content: start;
       isolation: isolate;
       min-width: 0;
       padding: 22px;
@@ -393,6 +468,27 @@
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
       border: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    .card-stage-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card-stage-label {
+      color: #231c34;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .card-stage-note {
+      color: #837992;
+      font-size: 0.88rem;
+      font-weight: 700;
     }
 
     .card-stage::before {
@@ -437,6 +533,28 @@
       position: relative;
       overflow: hidden;
       transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, filter 180ms ease;
+    }
+
+    .launch-card-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: grid;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .launch-card-kicker {
+      display: inline-flex;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(107, 70, 232, 0.08);
+      color: #5b38c6;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .launch-card::before {
@@ -523,10 +641,8 @@
       line-height: 0.92;
       letter-spacing: -0.05em;
       font-weight: 900;
-      max-width: 7.2ch;
+      max-width: 7.8ch;
       text-wrap: balance;
-      position: relative;
-      z-index: 1;
       color: var(--accent);
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
     }
@@ -534,6 +650,19 @@
     .launch-card-name .suffix {
       color: var(--ink);
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .launch-card-summary {
+      color: #6e6681;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      max-width: 26ch;
+    }
+
+    .launch-card-cta {
+      color: #4f30bc;
+      font-size: 0.9rem;
+      font-weight: 800;
     }
 
     .details {
@@ -867,11 +996,19 @@
     .detail-head {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       font-size: 1rem;
       font-weight: 800;
       color: #2a2140;
+    }
+
+    .detail-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
     }
 
     .detail-dot {
@@ -881,6 +1018,16 @@
       background: linear-gradient(180deg, #8b67ff 0%, #6b46e8 100%);
       box-shadow: 0 0 0 4px rgba(107, 70, 232, 0.08);
       flex: 0 0 auto;
+    }
+
+    .detail-metric {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(107, 70, 232, 0.08);
+      color: #5b39c5;
+      font-size: 0.77rem;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .detail span {
@@ -930,6 +1077,13 @@
         padding: 14px 18px;
       }
 
+      .topbar-main {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
       .topbar-actions {
         margin-left: 0;
         width: 100%;
@@ -939,6 +1093,10 @@
       .card-stage {
         min-height: auto;
         padding: 16px;
+      }
+
+      .card-stage-head {
+        margin-bottom: 14px;
       }
 
       .admin-grid {
@@ -975,6 +1133,12 @@
         margin-top: 10px;
         padding: 12px 14px;
         border-radius: 18px;
+      }
+
+      .topbar-nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
       }
 
       .brand-text {
@@ -1030,14 +1194,28 @@
         font-size: 0.95rem;
       }
 
+      .hero-stats {
+        gap: 10px;
+      }
+
+      .hero-stat {
+        min-width: 0;
+        flex: 1 1 100%;
+      }
+
       .launch-card {
-        min-height: 108px;
+        min-height: 132px;
         padding: 16px 14px;
       }
 
       .launch-card-name {
         font-size: clamp(1.55rem, 8vw, 2rem);
         max-width: none;
+      }
+
+      .launch-card-summary {
+        max-width: none;
+        font-size: 0.88rem;
       }
 
       .details {
@@ -1102,6 +1280,10 @@
         font-size: 1.05rem;
       }
 
+      .topbar-link {
+        font-size: 0.82rem;
+      }
+
       .launch-card-name {
         font-size: 1.4rem;
       }
@@ -1159,6 +1341,8 @@
       {
         id: "pix-agent",
         name: "Pix Agent",
+        kicker: "Creative ops",
+        summary: "Handle visual tasks, edits, and quick publishing actions from one focused workspace.",
         href: "https://pix-agent.vercel.app/",
         className: "pix-card slant-left",
         live: true
@@ -1166,6 +1350,8 @@
       {
         id: "shortly-ai-agent",
         name: "Shortly AI Agent",
+        kicker: "Core workspace",
+        summary: "Run your main Shortly workflows, reviews, and agent-driven task management.",
         href: "https://aishortlywebupdate-i1yc.vercel.app/login",
         className: "shortly-card slant-right",
         live: true
@@ -1173,6 +1359,8 @@
       {
         id: "daily-digest-agent",
         name: "Daily Wrap Email Agent",
+        kicker: "Email summaries",
+        summary: "Send daily wrap emails, scheduled briefings, and recurring updates with one login.",
         href: "https://shortly-email-agent.vercel.app/dashboard",
         className: "digest-card",
         live: true
@@ -1186,14 +1374,17 @@
     const details = [
       {
         title: "Pix Agent",
+        metric: "12 templates",
         body: "A direct workspace for Pix-related tasks and focused execution when you want to jump straight into that flow."
       },
       {
         title: "Shortly AI Agent",
+        metric: "Primary hub",
         body: "The main Shortly workspace for your core agent experience, designed as the primary entry point in this hub."
       },
       {
         title: "Daily Wrap Email Agent",
+        metric: "Daily sends",
         body: "The email-focused agent for sending daily wraps, updates, and recurring summary workflows from the Shortly hub."
       }
     ];
@@ -1263,13 +1454,6 @@
         ? card.name.slice(0, -(" " + suffix).length)
         : card.name;
 
-      const content = e(
-        "span",
-        { className: "launch-card-name" },
-        prefix + " ",
-        e("span", { className: "suffix" }, suffix)
-      );
-
       return e(
         "button",
         {
@@ -1278,7 +1462,19 @@
           onClick: () => onOpenLogin(card.id),
           "aria-label": "Open " + card.name
         },
-        content
+        e(
+          "div",
+          { className: "launch-card-inner" },
+          e("span", { className: "launch-card-kicker" }, card.kicker || "Workspace"),
+          e(
+            "span",
+            { className: "launch-card-name" },
+            prefix + " ",
+            e("span", { className: "suffix" }, suffix)
+          ),
+          e("span", { className: "launch-card-summary" }, card.summary || ""),
+          e("span", { className: "launch-card-cta" }, "Open workspace")
+        )
       );
     }
 
@@ -1289,8 +1485,13 @@
         e(
           "div",
           { className: "detail-head" },
-          e("span", { className: "detail-dot", "aria-hidden": "true" }),
-          e("strong", null, item.title)
+          e(
+            "div",
+            { className: "detail-title-group" },
+            e("span", { className: "detail-dot", "aria-hidden": "true" }),
+            e("strong", null, item.title)
+          ),
+          item.metric ? e("span", { className: "detail-metric" }, item.metric) : null
         ),
         e("span", null, item.body)
       );
@@ -1359,7 +1560,7 @@
               e(
                 "p",
                 { className: "admin-subtitle" },
-                "Create separate usernames and passwords for Pix, Shortly AI, and Daily Digest from one place."
+                "Create separate usernames and passwords for Pix, Shortly AI, and Daily Wrap Email from one place."
               )
             ),
             e("div", { className: "admin-badge" }, logins.length + " login records")
@@ -1960,12 +2161,24 @@
           { className: "topbar", "aria-label": "Main navigation" },
           e(
             "div",
-            { className: "brand", "aria-label": "Shortly Agents brand" },
+            { className: "topbar-main" },
             e(
               "div",
-              { className: "brand-text" },
-              e("span", { className: "shortly" }, "shortly"),
-              e("span", { className: "agents" }, "agents")
+              { className: "brand", "aria-label": "Shortly Agents brand" },
+              e(
+                "div",
+                { className: "brand-text" },
+                e("span", { className: "shortly" }, "shortly"),
+                e("span", { className: "agents" }, "agents")
+              )
+            ),
+            e(
+              "nav",
+              { className: "topbar-nav", "aria-label": "Sections" },
+              e("span", { className: "topbar-link active" }, "Overview"),
+              e("span", { className: "topbar-link" }, "Agents"),
+              e("span", { className: "topbar-link" }, "Access"),
+              e("span", { className: "topbar-link" }, "Admin")
             )
           ),
           e(
@@ -2001,16 +2214,45 @@
           e(
             "div",
             { className: "copy" },
+            e("span", { className: "hero-eyebrow" }, "Launcher dashboard"),
             e("h1", null, "One simple place to open your agents."),
             e(
               "p",
               null,
-              "Launch Pix, Shortly AI, and Daily Digest from one cleaner hub, with admin-controlled access and a layout that holds together across mobile, laptop, and large desktop screens."
+              "Launch Pix, Shortly AI, and Daily Wrap Email from one cleaner hub, with admin-controlled access and a layout that feels more like a real product workspace."
+            ),
+            e(
+              "div",
+              { className: "hero-stats" },
+              e(
+                "div",
+                { className: "hero-stat" },
+                e("strong", null, "3"),
+                e("span", null, "Agent spaces")
+              ),
+              e(
+                "div",
+                { className: "hero-stat" },
+                e("strong", null, "MongoDB"),
+                e("span", null, "Access control")
+              ),
+              e(
+                "div",
+                { className: "hero-stat" },
+                e("strong", null, "Live"),
+                e("span", null, "Launch-ready")
+              )
             )
           ),
           e(
             "section",
             { className: "card-stage", id: "launch-cards", "aria-label": "Agent launch cards" },
+            e(
+              "div",
+              { className: "card-stage-head" },
+              e("span", { className: "card-stage-label" }, "Agent spaces"),
+              e("span", { className: "card-stage-note" }, "Pick a workspace to continue")
+            ),
             e(
             "div",
             { className: "launch-grid" },
