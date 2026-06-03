@@ -20,6 +20,18 @@ const sessionSecret =
   process.env.SESSION_SECRET ||
   process.env.ADMIN_PASSWORD ||
   "shortly-local-session-secret";
+const agentAccessSecret =
+  process.env.AGENT_ACCESS_SECRET ||
+  process.env.SESSION_SECRET ||
+  process.env.ADMIN_PASSWORD ||
+  "shortly-local-agent-access-secret";
+const agentAuthOrigins = new Set(
+  (process.env.AGENT_AUTH_ORIGINS ||
+    "https://pix-agent.vercel.app,https://shortly-email-agent.vercel.app,https://shortly-ai-emailer.vercel.app")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+);
 
 const baseDir = __dirname;
 
@@ -124,6 +136,23 @@ function createSessionToken() {
   return `${payload}.${signSessionPayload(payload)}`;
 }
 
+function createAgentAccessToken(login) {
+  const payload = encodeSessionPayload({
+    type: "agent-access",
+    agentId: login.agentId,
+    loginId: String(login._id),
+    displayName: login.displayName,
+    username: login.username,
+    email: login.email,
+    expiresAt: Date.now() + sessionLifetimeMs
+  });
+  const signature = crypto
+    .createHmac("sha256", agentAccessSecret)
+    .update(payload)
+    .digest("base64url");
+  return `${payload}.${signature}`;
+}
+
 function readSessionToken(token) {
   const [encodedPayload, signature] = String(token || "").split(".");
   if (!encodedPayload || !signature) {
@@ -196,6 +225,23 @@ function requireAdmin(req, res, next) {
   next();
 }
 
+function allowAgentAuthCors(req, res, next) {
+  const origin = req.headers.origin;
+  if (origin && agentAuthOrigins.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  }
+
+  if (req.method === "OPTIONS") {
+    res.status(204).end();
+    return;
+  }
+
+  next();
+}
+
 async function seedLoginsIfNeeded(collection) {
   const count = await collection.countDocuments();
   if (count > 0) {
@@ -261,6 +307,7 @@ function createApp() {
 
   app.use(express.json());
   app.use(cookieParser());
+  app.use("/api/agent-login", allowAgentAuthCors);
   app.use(express.static(baseDir));
 
   app.get("/api/session", (req, res) => {
@@ -384,7 +431,10 @@ function createApp() {
       return;
     }
 
-    res.json({ login: normalizeLogin(login) });
+    res.json({
+      login: normalizeLogin(login),
+      accessToken: createAgentAccessToken(login)
+    });
   });
 
   app.get("*", (req, res) => {

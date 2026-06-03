@@ -1849,12 +1849,20 @@
       return payload;
     }
 
-    function buildAgentHref(agent, login) {
+    function buildAgentHref(agent, login, accessToken = "") {
       if (!agent || !agent.href) {
         return null;
       }
 
       const url = new URL(agent.href);
+      if (accessToken) {
+        url.searchParams.set("token", accessToken);
+      }
+
+      if (agent.id === "pix-agent") {
+        return url.toString();
+      }
+
       url.searchParams.set("agentLoginId", login.id);
       url.searchParams.set("agentUserName", login.displayName);
       url.searchParams.set("agentUserEmail", login.email);
@@ -2462,7 +2470,7 @@
             return;
           }
 
-          window.location.href = buildAgentHref(selectedAgent, payload.login);
+          window.location.href = buildAgentHref(selectedAgent, payload.login, payload.accessToken);
         } catch (error) {
           setAgentLoginError(error.message);
         } finally {
