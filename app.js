@@ -364,14 +364,21 @@ function createApp() {
     const { loginsCollection } = await getDbContext();
     const agentId = String(req.body?.agentId || "").trim();
     const username = String(req.body?.username || "").trim();
-    const password = String(req.body?.password || "");
+    const password = String(req.body?.password || "").trim();
 
     if (!agentId || !username || !password) {
       res.status(400).json({ error: "Agent id, username, and password are required." });
       return;
     }
 
-    const login = await loginsCollection.findOne({ agentId, username });
+    const login = await loginsCollection.findOne({
+      agentId,
+      $or: [
+        { username },
+        { displayName: username },
+        { email: username.toLowerCase() }
+      ]
+    });
     if (!login || !verifyPassword(password, login.passwordHash)) {
       res.status(401).json({ error: "Invalid login for this agent." });
       return;
