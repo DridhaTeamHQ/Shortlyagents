@@ -35,7 +35,7 @@ const launchCards = [
   },
   {
     id: "daily-digest-agent",
-    name: "Daily Digest Agent",
+    name: "Daily Wrap Email Agent",
     href: "https://shortly-email-agent.vercel.app/dashboard",
     live: true
   }
@@ -58,10 +58,10 @@ const starterLogins = [
   },
   {
     agentId: "daily-digest-agent",
-    displayName: "Digest Editor",
-    username: "digest.editor",
+    displayName: "Daily Wrap Operator",
+    username: "daily.wrap",
     password: "Digest@1234",
-    email: "digest.editor@shortly.ai"
+    email: "daily.wrap@shortly.ai"
   }
 ];
 
