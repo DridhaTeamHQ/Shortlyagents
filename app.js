@@ -16,9 +16,12 @@ const adminUsername = process.env.ADMIN_USERNAME || "Shortly";
 const adminPassword = process.env.ADMIN_PASSWORD || "Shortly@4321";
 const sessionCookieName = process.env.SESSION_COOKIE || "shortly_admin_session";
 const sessionLifetimeMs = 1000 * 60 * 60 * 12;
+const sessionSecret =
+  process.env.SESSION_SECRET ||
+  process.env.ADMIN_PASSWORD ||
+  "shortly-local-session-secret";
 
 const baseDir = __dirname;
-const sessions = new Map();
 
 const launchCards = [
   {
@@ -102,30 +105,66 @@ function normalizeLogin(document) {
   };
 }
 
-function createSession(res) {
-  const token = crypto.randomUUID();
-  sessions.set(token, {
+function encodeSessionPayload(payload) {
+  return Buffer.from(JSON.stringify(payload)).toString("base64url");
+}
+
+function signSessionPayload(encodedPayload) {
+  return crypto
+    .createHmac("sha256", sessionSecret)
+    .update(encodedPayload)
+    .digest("base64url");
+}
+
+function createSessionToken() {
+  const payload = encodeSessionPayload({
+    role: "admin",
     expiresAt: Date.now() + sessionLifetimeMs
   });
+  return `${payload}.${signSessionPayload(payload)}`;
+}
+
+function readSessionToken(token) {
+  const [encodedPayload, signature] = String(token || "").split(".");
+  if (!encodedPayload || !signature) {
+    return null;
+  }
+
+  const expectedSignature = signSessionPayload(encodedPayload);
+  const signatureBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expectedSignature);
+
+  if (
+    signatureBuffer.length !== expectedBuffer.length ||
+    !crypto.timingSafeEqual(signatureBuffer, expectedBuffer)
+  ) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(Buffer.from(encodedPayload, "base64url").toString("utf8"));
+  } catch (error) {
+    return null;
+  }
+}
+
+function createSession(res) {
+  const token = createSessionToken();
 
   res.cookie(sessionCookieName, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: sessionLifetimeMs
   });
 }
 
-function clearSession(req, res) {
-  const token = req.cookies[sessionCookieName];
-  if (token) {
-    sessions.delete(token);
-  }
+function clearSession(res) {
   res.clearCookie(sessionCookieName, {
     httpOnly: true,
     sameSite: "lax",
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     path: "/"
   });
 }
@@ -136,13 +175,12 @@ function isAdminAuthenticated(req) {
     return false;
   }
 
-  const session = sessions.get(token);
-  if (!session) {
+  const session = readSessionToken(token);
+  if (!session || session.role !== "admin") {
     return false;
   }
 
   if (session.expiresAt < Date.now()) {
-    sessions.delete(token);
     return false;
   }
 
@@ -246,7 +284,7 @@ function createApp() {
   });
 
   app.post("/api/admin/logout", (req, res) => {
-    clearSession(req, res);
+    clearSession(res);
     res.json({ ok: true });
   });
 
