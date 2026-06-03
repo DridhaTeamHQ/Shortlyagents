@@ -1974,7 +1974,7 @@
               e(
                 "p",
                 { className: "admin-subtitle" },
-                "Create separate usernames and passwords for Pix, Shortly AI, and Daily Wrap Email from one place."
+                "Create separate usernames and passwords for Pix and Daily Wrap Email from one place."
               )
             ),
             e("div", { className: "admin-badge" }, logins.length + " login records")
@@ -2417,6 +2417,14 @@
       }
 
       function handleOpenAgentLogin(agentId) {
+        if (agentId === "shortly-ai-agent") {
+          const shortlyAgent = agentById[agentId];
+          if (shortlyAgent?.href) {
+            window.location.href = shortlyAgent.href;
+          }
+          return;
+        }
+
         setActiveAgentLoginId(agentId);
         setAgentLoginUsername("");
         setAgentLoginPassword("");
