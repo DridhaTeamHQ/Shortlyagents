@@ -506,35 +506,6 @@
       text-wrap: balance;
     }
 
-    .hero-stats {
-      margin-top: auto;
-      display: grid;
-      gap: 10px;
-    }
-
-    .hero-stat {
-      min-width: 0;
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(230, 223, 245, 0.96);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .hero-stat strong {
-      font-size: 0.98rem;
-      color: #251d37;
-    }
-
-    .hero-stat span {
-      color: #756d88;
-      font-size: 0.88rem;
-      font-weight: 700;
-    }
-
     .card-stage {
       position: relative;
       min-height: 0;
@@ -1259,15 +1230,6 @@
         font-size: clamp(1.9rem, 10vw, 2.6rem);
       }
 
-      .hero-stats {
-        gap: 10px;
-      }
-
-      .hero-stat {
-        min-width: 0;
-        grid-template-columns: 1fr;
-      }
-
       .launch-card {
         min-height: 180px;
         padding: 16px 14px;
@@ -1499,13 +1461,12 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: stretch;
     }
 
     .copy,
-    .hero-stats,
     .card-stage,
     .detail {
       border-radius: 18px;
@@ -1516,7 +1477,7 @@
 
     .copy {
       padding: clamp(24px, 4vw, 46px);
-      min-height: 260px;
+      min-height: 240px;
       display: grid;
       align-content: center;
       gap: 16px;
@@ -1546,42 +1507,12 @@
 
     .copy-lead {
       margin: 0;
-      max-width: 52ch;
+      max-width: 58ch;
       color: var(--muted);
       font-size: 1rem;
       line-height: 1.7;
       letter-spacing: 0;
       font-weight: 500;
-    }
-
-    .hero-stats {
-      width: min(280px, 30vw);
-      padding: 14px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .hero-stat {
-      min-height: 74px;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: #fbfaff;
-      display: grid;
-      align-content: center;
-      gap: 4px;
-    }
-
-    .hero-stat strong {
-      font-size: 1.25rem;
-      line-height: 1;
-      color: var(--ink);
-    }
-
-    .hero-stat span {
-      color: var(--muted);
-      font-size: 0.86rem;
-      font-weight: 700;
     }
 
     .card-stage {
@@ -1754,7 +1685,6 @@
 
       .topbar,
       .copy,
-      .hero-stats,
       .card-stage,
       .detail {
         border-radius: 14px;
@@ -1767,11 +1697,6 @@
 
       .hero {
         grid-template-columns: 1fr;
-      }
-
-      .hero-stats {
-        width: 100%;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .launch-grid,
@@ -1801,10 +1726,6 @@
       .toggle-chip,
       .ghost-chip {
         flex: 1 1 auto;
-      }
-
-      .hero-stats {
-        grid-template-columns: 1fr;
       }
 
       .section-heading {
@@ -2701,28 +2622,6 @@
                 "p",
                 { className: "copy-lead" },
                 "Launch each agent with its own login. Clean, fast, and controlled by admin access."
-              )
-            ),
-            e(
-              "div",
-              { className: "hero-stats", "aria-label": "Workspace summary" },
-              e(
-                "div",
-                { className: "hero-stat" },
-                e("strong", null, "3"),
-                e("span", null, "Agents")
-              ),
-              e(
-                "div",
-                { className: "hero-stat" },
-                e("strong", null, "Admin"),
-                e("span", null, "Access")
-              ),
-              e(
-                "div",
-                { className: "hero-stat" },
-                e("strong", null, "Live"),
-                e("span", null, "Links")
               )
             )
           ),
