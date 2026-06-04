@@ -21,6 +21,7 @@ const sessionSecret =
   process.env.ADMIN_PASSWORD ||
   "shortly-local-session-secret";
 const agentAccessSecret =
+  process.env.SHORTLY_AGENT_AUTH_SECRET ||
   process.env.AGENT_ACCESS_SECRET ||
   process.env.SESSION_SECRET ||
   process.env.ADMIN_PASSWORD ||
