@@ -26,6 +26,9 @@ const agentAccessSecret =
   process.env.SESSION_SECRET ||
   process.env.ADMIN_PASSWORD ||
   "shortly-local-agent-access-secret";
+const legacyEmailAgentSharedToken =
+  process.env.SHORTLY_AGENT_SHARED_TOKEN ||
+  "";
 const agentAuthOrigins = new Set(
   (process.env.AGENT_AUTH_ORIGINS ||
     "https://pix-agent.vercel.app,https://shortly-email-agent.vercel.app,https://shortly-ai-emailer.vercel.app")
@@ -152,6 +155,17 @@ function createAgentAccessToken(login) {
     .update(payload)
     .digest("base64url");
   return `${payload}.${signature}`;
+}
+
+function resolveAgentAccessToken(login) {
+  if (
+    login?.agentId === "daily-digest-agent" &&
+    legacyEmailAgentSharedToken
+  ) {
+    return legacyEmailAgentSharedToken;
+  }
+
+  return createAgentAccessToken(login);
 }
 
 function readSessionToken(token) {
@@ -434,7 +448,7 @@ function createApp() {
 
     res.json({
       login: normalizeLogin(login),
-      accessToken: createAgentAccessToken(login)
+      accessToken: resolveAgentAccessToken(login)
     });
   });
 
