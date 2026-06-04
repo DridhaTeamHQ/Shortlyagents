@@ -1856,7 +1856,12 @@
 
       const url = new URL(agent.href);
       if (accessToken) {
-        url.searchParams.set("token", accessToken);
+        if (agent.id === "pix-agent") {
+          url.pathname = "/index.html";
+          url.searchParams.set("token", accessToken);
+        } else {
+          url.searchParams.set("token", accessToken);
+        }
       }
 
       if (agent.id === "pix-agent") {
