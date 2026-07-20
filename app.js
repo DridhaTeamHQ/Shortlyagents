@@ -11,6 +11,7 @@ dotenv.config();
 const host = process.env.HOST || "127.0.0.1";
 const port = Number(process.env.PORT || 4173);
 const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017";
+console.log("Using MongoDB URI:", mongoUri);
 const mongoDbName = process.env.MONGODB_DB || "shortly_agents";
 const adminUsername = process.env.ADMIN_USERNAME || "Shortly";
 const adminPassword = process.env.ADMIN_PASSWORD || "Shortly@4321";
@@ -258,22 +259,21 @@ function allowAgentAuthCors(req, res, next) {
 }
 
 async function seedLoginsIfNeeded(collection) {
-  const count = await collection.countDocuments();
-  if (count > 0) {
-    return;
+  for (const login of starterLogins) {
+    await collection.updateOne(
+      { agentId: login.agentId, username: login.username },
+      {
+        $setOnInsert: {
+          displayName: login.displayName,
+          email: login.email,
+          passwordHash: createPasswordHash(login.password),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      },
+      { upsert: true }
+    );
   }
-
-  const seedDocuments = starterLogins.map((login) => ({
-    agentId: login.agentId,
-    displayName: login.displayName,
-    username: login.username,
-    email: login.email,
-    passwordHash: createPasswordHash(login.password),
-    createdAt: new Date(),
-    updatedAt: new Date()
-  }));
-
-  await collection.insertMany(seedDocuments);
 }
 
 async function seedAdminIfNeeded(collection) {
@@ -297,6 +297,7 @@ async function getDbContext() {
     dbContextPromise = (async () => {
       const client = new MongoClient(mongoUri);
       await client.connect();
+      console.log("✅ Successfully connected to MongoDB!");
 
       const db = client.db(mongoDbName);
       const loginsCollection = db.collection("agent_logins");

@@ -5,12 +5,14 @@
   "description": "Shortly agents launcher with MongoDB-backed admin and agent logins.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
-    "mongodb": "^6.8.0"
+    "mongodb": "^6.8.0",
+    "nodemon": "^3.1.14"
   }
 }
